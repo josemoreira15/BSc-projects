@@ -1,0 +1,33 @@
+ Queries
+---------
+
+1. db.plantas.count()
+2. db.plantas.count({Freguesia: "São Domingos de Rana"})
+3. db.plantas.distinct("Freguesia").sort()
+4. db.plantas.aggregate([{$group: {"_id": "$Freguesia", "count": {$sum: 1}}}])
+5. db.plantas.aggregate([{$group: {"_id": "$Especie", "count": {$sum: 1}}}])
+
+
+ Tratamento/Persistência de Dados
+----------------------------------
+O dataset fornecido sofreu alterações nos seguintes parâmetros:
+ - conversão de Id em _id, de forma a não haver adição automático do parâmetro _id e poder ser acessível numa fase tardia (por exemplo, na Interface)
+ - conversão de todos os parâmetros com acentuação/cedilhas/espaços em parâmetros sem os mesmos (de forma a resolver eventuais conflitos com mongoose, etc.)
+ - carregamento do dataset no mongo: mongoimport -d plantas -c plantas plantas.json --jsonArray (este último uma vez que o ficheiro se encontra como uma lista)
+
+
+ Execução do software
+----------------------
+
+ex1: 
+ - desenvolvido com npx express-generator
+ - npm i (para instalar dependências)
+ - utilização do mongoose (para "ligar" à base de dados e aceder ao conteúdo pretendido)
+ - para executar: npm start e pesquisa das rotas no browser
+
+ex2:
+ - desenvolvido com npx express-generator --view=pug (tratando-se de uma interface que vai recorrer a pug files)
+ - npm i (para instalar dependências)
+ - para executar: npm start e pesquisa das rotas no browser
+ - a ligação entre o ex2 e o ex1 é feita através do axios 
+

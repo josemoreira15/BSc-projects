@@ -1,0 +1,62 @@
+extends layout
+
+block content
+    .w3-card-4
+        header.w3-container.w3-blue
+            center 
+                h2(style="text-shadow:1px 1px 0 #444") #[b 2doListApp]
+        form.w3-container(method="POST")
+            fieldset 
+                label ID [already defined]
+                input.w3-input.w3-round(type="text" name="id" value= data.length-55 readonly)
+                br 
+                label Task
+                input.w3-input.w3-round(type="text" name="task")
+                br
+                label Author
+                select.w3-select.w3-round(name="name" style="font-size: 15px;")
+                    option(value="" disabled selected) Choose your option
+
+                    each unit in data
+                        if !unit.status
+                            option(value=unit.name) #{unit.name}
+                br 
+                br
+                label Date 
+                input.w3-input.w3-round(type="date" name="date")
+            br
+            button.w3-btn.w3-blue.w3-mb-2(type="submit" style="position: absolute; right: 0;") Submit Task
+    br
+    br
+    .w3-card-4.w3-cell-row
+        .w3-container.w3-cell
+            table.w3-table-all
+                caption(style="font-size: 25px; text-shadow:1px 1px 0 #444") To do tasks
+                tr
+                    th Task</th>
+                    th Author
+                    th Date
+                
+                each unit in data
+                    if unit.status && unit.status == 'todo'
+                        tr
+                            td #{unit.task}
+                            td #{unit.name}
+                            td #{unit.date}
+                            td [#[a(href="/edit/" + unit.id) Done]]
+                                
+        .w3-container.w3-cell
+            table.w3-table-all
+                caption(style="font-size: 25px; text-shadow:1px 1px 0 #444") Done tasks
+                tr
+                    th Task
+                    th Author
+                    th Date
+                
+                each unit in data
+                    if unit.status && unit.status == 'done'
+                        tr
+                            td #{unit.task}
+                            td #{unit.name}
+                            td #{unit.date}
+                            td [#[a(href="/delete/" + unit.id) Delete]]
